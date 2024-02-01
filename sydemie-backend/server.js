@@ -28,11 +28,10 @@ const verifyToken = require("./middlwares/verifyToken");
 // app.get("/soso", verifyToken, (req, res) => {
 //   res.json(data);
 // });
-const userRoute = require("./routes/userRoute");
-const connexion = require("./routes/connexion");
 
-app.use("/inscription", userRoute);
-app.use("/connexion", connexion);
+const authentification = require("./routes/authRoute");
+
+app.use("/api/auth", authentification);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

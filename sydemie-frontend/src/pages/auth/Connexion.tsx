@@ -7,40 +7,49 @@ import { Link, useNavigate } from "react-router-dom";
 import Auth from "./Auth";
 import { api } from "@/api/init";
 import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { setCookie } from "../cookies/Cookies";
+// import { useToast } from "@/components/ui/use-toast";
+// import { setCookie } from "../cookies/Cookies";
 import {} from "react-router-dom";
+// import { useDispatch } from "react-redux";
+import { login } from "@/redux";
 
 export default function Connexion() {
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [donne, setDonne] = useState({
     email: "",
     password: "",
   });
-  const { toast } = useToast();
+  // const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await api.post("connexion", {
+      const response = await api.post("api/auth/connexion", {
         json: donne,
       });
+      const responseData: { auth: boolean } = await response.json();
 
-      const responseData: { message: string; token: string } =
-        await response.json();
-      const token = responseData.token;
-      if (token) {
-        console.log("laaaaayyyyyy");
-        navigate("/zoza");
+      if (responseData.auth) {
+        console.log("Authentification réussie!");
+      } else {
+        console.log("Échec de l'authentification.");
       }
-      setCookie("token", token, 1);
 
-      console.log(responseData.token);
-      toast({
-        description: responseData.message,
-      });
+      // const token = responseData.token;
+
+      // if (token) {
+      //   dispatch(login());
+      //   navigate("/zoza");
+      //   setCookie("token", token, 1);
+      // }
+
+      // console.log(responseData.token);
+      // toast({
+      //   description: responseData.message,
+      // });
     } catch (error) {
       console.error("Erreur lors de l'envoi de la requête :", error);
     }
@@ -126,3 +135,66 @@ export default function Connexion() {
     </Auth>
   );
 }
+// import { useState } from "react";
+// import { Link, useNavigate } from "react-router-dom";
+
+// export default function SignIn() {
+//   const [donne, setDonne] = useState({
+//     email: "",
+//     password: "",
+//   });
+
+//   const navigate = useNavigate();
+
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     try {
+//       const res = await fetch("http://localhost:3000/api/auth/connexion", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(donne),
+//       });
+//       const data = await res.json();
+//       if (data.success === false) {
+//         return;
+//       }
+
+//       navigate("/");
+//     } catch (error) {
+//       console.log("first");
+//     }
+//   };
+//   return (
+//     <div className="p-3 max-w-lg mx-auto">
+//       <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
+//       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+//         <input
+//           type="email"
+//           placeholder="Email"
+//           id="email"
+//           className="bg-slate-100 p-3 rounded-lg"
+//           onChange={(e) => setDonne({ ...donne, email: e.target.value })}
+//         />
+//         <input
+//           type="password"
+//           placeholder="Password"
+//           id="password"
+//           className="bg-slate-100 p-3 rounded-lg"
+//           onChange={(e) => setDonne({ ...donne, password: e.target.value })}
+//         />
+//         <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+//           {" "}
+//           se connecte
+//         </button>
+//       </form>
+//       <div className="flex gap-2 mt-5">
+//         <p>Dont Have an account?</p>
+//         <Link to="/sign-up">
+//           <span className="text-blue-500">Sign up</span>
+//         </Link>
+//       </div>
+//     </div>
+//   );
+// }

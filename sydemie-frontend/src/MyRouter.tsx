@@ -6,6 +6,8 @@ import Connexion from "./pages/auth/Connexion";
 
 import Inscription from "./pages/auth/Inscription";
 import Zoza from "./pages/Zoza";
+import { Provider } from "react-redux";
+import { store } from "./redux";
 
 const MainPage = () => {
   return (
@@ -37,13 +39,15 @@ const MainPage = () => {
 
 const AppRoutes = () => {
   return (
-    <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path="auth/connexion" element={<Connexion />} />
-      <Route path="auth/inscription" element={<Inscription />} />
-      <Route path="/test" element={<ComposantTest />} />
-      <Route path="/zoza" element={<Zoza />} />
-    </Routes>
+    <Provider store={store}>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="auth/connexion" element={<Connexion />} />
+        <Route path="auth/inscription" element={<Inscription />} />
+        <Route path="/test" element={<ComposantTest />} />
+        <Route path="/zoza" element={<Zoza />} />
+      </Routes>
+    </Provider>
   ); // mon enselble de route
 };
 

@@ -20,7 +20,7 @@ export default function Inscription() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await api.post("inscription", {
+      const response = await api.post("api/auth/inscription", {
         json: donne,
       });
 

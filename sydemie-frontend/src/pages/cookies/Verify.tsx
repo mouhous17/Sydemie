@@ -10,6 +10,7 @@ const Verify = () => {
     return <Navigate to="/zoza" />;
   } else {
     console.log(`Le cookie 'token' n'a pas été trouvé.`);
+    return <Navigate to="/auth/connexion" />;
   }
 };
 
